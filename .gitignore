@@ -1,0 +1,8 @@
+# VSCode stuff
+.vscode
+
+# Logs
+logs/
+
+# DB settings
+Server/**/db-settings.php

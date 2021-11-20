@@ -1,0 +1,91 @@
+# -----------------------------------------------------------------------------
+
+# When changing the apache2 config file (/etc/apache2/apache2.conf)
+# Always run 
+apachectl configtest
+# To check if the syntax is correct
+
+# After changes are finalized, apply them be restarting apache2 service using
+sudo service apache2 restart
+
+# -----------------------------------------------------------------------------
+
+# To setup a redirect from /var/www/html to /var/www/html/wi-wait
+# Add this line to /etc/apache2/apache2.conf into the <Directory /> section
+RedirectMatch ^/$ /wi-wait/
+
+# So it should look like this:
+<Directory />
+        # Redirect from /var/www/html to /var/www/html/wi-wait
+        RedirectMatch ^/$ /wi-wait/
+        Options FollowSymLinks
+        AllowOverride None
+        Require all denied
+</Directory>
+
+# Source: https://serverfault.com/a/9994
+
+# -----------------------------------------------------------------------------
+
+# Updating phpMyAdmin, to patch bugs
+
+# Step 1:
+Download newest version (.zip file) from https://www.phpmyadmin.net/
+
+# Setp 2: Delete old version in /usr/share/phpmyadmin/
+cd /usr/share/phpmyadmin/
+sudo rm -rf *
+
+# Step 3: Temporarly allow write access
+cd /usr/share/
+sudo chmod 777 phpmyadmin
+
+# Step 3: Transfer new files from zip file to /usr/share/phpmyadmin/
+Using WinSCP or FileZilla
+
+# Step 4: Restore permissions
+cd /usr/share/
+sudo chmod 755 phpmyadmin
+
+# Source: https://askubuntu.com/a/998405
+
+# -----------------------------------------------------------------------------
+
+# Adding secret key to new phpMyAdmin (required to get rid of error)
+
+# Step 1: Create config file (it is not created by default):
+cd /usr/share/phpmyadmin/
+cp config.sample.inc.php config.inc.php
+
+# Step 2: Add secret key
+sudo nano config.inc.php
+
+# Add 32 random characters b/w single quotes:
+
+$cfg['blowfish_secret'] = ''; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+						  ^^	
+
+# Step 3: Save and close file, reload phpMyAdmin webpage
+
+# Source: https://serverfault.com/a/615555
+
+# -----------------------------------------------------------------------------
+
+# Making sure phpMyAdmin has access to temporary folder (required to get rid of error)
+
+# Make tmp folder and set required permission
+cd /usr/share/phpmyadmin/
+sudo mkdir /usr/share/phpmyadmin/tmp
+sudo chmod 777 tmp/
+
+# Source: https://stackoverflow.com/a/49730991
+
+# -----------------------------------------------------------------------------
+
+# Turn on PHP errors:
+# Set:
+display_errors = On
+# in
+/etc/php/7.3/apache2/php.ini
+# then restart apahe2:
+sudo service apache2 restart

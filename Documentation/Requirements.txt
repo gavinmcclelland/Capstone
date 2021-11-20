@@ -1,0 +1,17 @@
+* Python3
+Built-in
+
+* Pip3
+sudo apt-get install python3-pip
+
+# Python3 libraries:
+
+* future
+pip3 install future
+
+* PIL + libopenjp2
+pip3 install pillow
+sudo apt-get install libopenjp2-7
+
+* mysql
+pip3 install mysql-connector 
