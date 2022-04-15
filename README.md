@@ -15,6 +15,3 @@
 
 ### Other 
 - Currently only WiFi dongle drivers
-
-### Documentation
-- Hopefully more stuff will be added here
