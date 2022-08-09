@@ -1,3 +1,5 @@
+(copy of commit history from gitlab)
+
 # Wi-Wait Capstone Project
 ## Team 2
 
